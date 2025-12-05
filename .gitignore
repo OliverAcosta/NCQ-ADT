@@ -1,0 +1,76 @@
+## Build results
+bin/
+obj/
+out/
+[Bb]uild/
+[Ll]og/
+
+## Visual Studio cache
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## NuGet
+*.nupkg
+*.snupkg
+packages/
+*.nuget.props
+*.nuget.targets
+
+## Compiled binaries
+*.dll
+*.exe
+*.pdb
+
+## Publish output
+publish/
+app.publish/
+
+## Temporary files
+*.tmp
+*.temp
+*.log
+
+## Test results
+TestResult*/
+TestResults/
+*.coverage
+*.coveragexml
+
+## SQLite / Local DB
+
+*.db-shm
+*.db-wal
+*.mdf
+*.ldf
+
+## Auto-generated files
+Generated/
+*.g.cs
+*.g.i.cs
+
+## Rider / ReSharper
+_ReSharper*/
+*.DotSettings.user
+.idea/
+
+## VS Code
+.vscode/
+
+## OS-specific
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+## Others
+*.cache
+*.config.user
+*.json.user
