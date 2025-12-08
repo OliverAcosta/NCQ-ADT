@@ -5,7 +5,6 @@ Insert into Priorities (Name, Description, Active) values ('Media','Media', 1);
 Insert into Priorities (Name, Description, Active) values ('Alta','Alta', 1);
 Insert into Priorities (Name, Description, Active) values ('Urgente','Urgente', 1);
 
-
 -- insert status
 Insert into Status (Name, Description, Active) values ('Pendiente','Pendiente', 1);
 Insert into Status (Name, Description, Active) values ('En Proceso','En Proceso', 1);
@@ -13,6 +12,8 @@ Insert into Status (Name, Description, Active) values ('Terminado','Terminado', 
 
 -- insert user
 Insert into User (Username, Name, Email, Password, Active) values ('admin','Juan Oliver','acosta.herrera.oliver@gmail.com','ut5uaO/cGr4OXiMDenDxBGpTWpfhj5+W+5TFkln1DF7li1TFtgJEuBdw8Hgt1Ybm', 1);
-Insert into User (Username, Name, Email, Password, Active) values ('Invitado','Pepe perez','pepe@localhost.com','ut5uaO/cGr4OXiMDenDxBGpTWpfhj5+W+5TFkln1DF7li1TFtgJEuBdw8Hgt1Ybm', 1);
+Insert into User (Username, Name, Email, Password, Active) values ('oliver','Juan Oliver','acosta.herrera.oliver@gmail.com','ut5uaO/cGr4OXiMDenDxBGpTWpfhj5+W+5TFkln1DF7li1TFtgJEuBdw8Hgt1Ybm', 1);
+Insert into User (Username, Name, Email, Password, Active) values ('Invitado','Invitado','invitado@localhost.com','ut5uaO/cGr4OXiMDenDxBGpTWpfhj5+W+5TFkln1DF7li1TFtgJEuBdw8Hgt1Ybm', 1);
+Insert into User (Username, Name, Email, Password, Active) values ('Jose','Jose Mateo Aguilar Sanchez','jose.aguilar@gmail.com','ut5uaO/cGr4OXiMDenDxBGpTWpfhj5+W+5TFkln1DF7li1TFtgJEuBdw8Hgt1Ybm', 1);
 
 --- password: #Tarea123

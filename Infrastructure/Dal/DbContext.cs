@@ -7,7 +7,7 @@ namespace Infrastructure.Dal
     {
         public DbContext()
         {
-            new DatabaseCreation().createDatabase();
+            new DatabaseCreation().createDatabase(); // prueba la correcta creacion de la base de datos.
         }
 
         public readonly NotesRepository notesRepository = new NotesRepository();
