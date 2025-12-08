@@ -14,7 +14,7 @@ namespace Infrastructure.Dal.Repositories
             {
                 connection.Open();
                 connection.Execute(@"Insert into User(Username, Name, Email, Password, Active)
-                  values (@Username, @Name, @email, @Password, @Active)", 
+                  values (@Username, @Name, @Email, @Password, @Active)", 
                   new { entity.UserName, entity.Name,  entity.Email, entity.Password, entity.Active });
             }
         }
@@ -60,7 +60,7 @@ namespace Infrastructure.Dal.Repositories
             {
                 connection.Open();
                 connection.QueryFirstOrDefault(@"Update User set Username = @Username, Name = @Name, Email = @Email,
-                    Password = @password, Active = @Active where Id = @id",
+                    Password = @password, Active = @Active where Id = @Id",
                     new { entity.Id, entity.UserName, entity.Name, entity.Email, entity.Password, entity.Active });
             }
         }

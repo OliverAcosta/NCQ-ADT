@@ -13,8 +13,8 @@ namespace Infrastructure.Dal.Repositories
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                connection.Execute(@"Insert into Priorities(Name, Description)
-                  values (@Name, @Description)", new { entity.Name, entity.Description });
+                connection.Execute(@"Insert into Priorities(Name, Description, Active)
+                  values (@Name, @Description, Active)", new { entity.Name, entity.Description, entity.Active });
             }
         }
 
@@ -32,7 +32,7 @@ namespace Infrastructure.Dal.Repositories
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                return connection.QueryFirstOrDefault<Priorities>(@"Select Id, Name, Description from Priorities where Id = @id", new { id });
+                return connection.QueryFirstOrDefault<Priorities>(@"Select Id, Name, Description, Active from Priorities where Id = @id", new { id });
             }
         }
 
@@ -41,7 +41,7 @@ namespace Infrastructure.Dal.Repositories
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                return connection.Query<Priorities>(@"Select Id, Name, Description from Priorities where Id in @range", range);
+                return connection.Query<Priorities>(@"Select Id, Name, Description, Active from Priorities where Id in @range", range);
             }
         }
 
@@ -50,7 +50,7 @@ namespace Infrastructure.Dal.Repositories
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                return connection.Query<Priorities>(@"Select Id, Name, Description from Priorities");
+                return connection.Query<Priorities>(@"Select Id, Name, Description, Active from Priorities");
             }
         }
         public void Update(Priorities entity)
@@ -58,8 +58,8 @@ namespace Infrastructure.Dal.Repositories
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                connection.QueryFirstOrDefault(@"Update Priorities set Name = @Name, Description = @Description where Id = @id",
-                    new { entity.Id, entity.Name, entity.Description });
+                connection.QueryFirstOrDefault(@"Update Priorities set Name = @Name, Description = @Description, Active = @Active where Id = @Id",
+                    new { entity.Id, entity.Name, entity.Description, entity.Active });
             }
         }
     }

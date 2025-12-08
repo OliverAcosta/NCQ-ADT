@@ -59,7 +59,7 @@ namespace Infrastructure.Dal.Repositories
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                connection.QueryFirstOrDefault(@"Update set UserTaskId = @UserTaskId, Notes = @Notes where Id = @id",
+                connection.QueryFirstOrDefault(@"Update set UserTaskId = @UserTaskId, Notes = @Notes where Id = @Id",
                     new { entity.Id, entity.UserTaskId, entity.Note });
             }
         }

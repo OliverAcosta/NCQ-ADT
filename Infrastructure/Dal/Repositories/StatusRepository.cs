@@ -7,7 +7,6 @@ namespace Infrastructure.Dal.Repositories
 {
     public class StatusRepository : IRepository<Status>, IRangeRespository<Status>
     {
-       
         public void Add(Status entity)
         {
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
@@ -50,7 +49,7 @@ namespace Infrastructure.Dal.Repositories
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                return connection.Query<Status>(@"Select Id, Name, Description, Active from Priorities");
+                return connection.Query<Status>(@"Select Id, Name, Description, Active from Status");
             }
         }
         public void Update(Status entity)
@@ -58,7 +57,7 @@ namespace Infrastructure.Dal.Repositories
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                connection.QueryFirstOrDefault(@"Update Priorities set Name = @Name, Description = @Description, Active = @Active where Id = @id",
+                connection.QueryFirstOrDefault(@"Update Status set Name = @Name, Description = @Description, Active = @Active where Id = @Id",
                     new { entity.Id, entity.Name, entity.Description, entity.Active });
             }
         }
