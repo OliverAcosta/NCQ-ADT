@@ -24,7 +24,7 @@ namespace Infrastructure.Dal
 
         private bool checkForUser()
         {
-            string sql = "select id from user";
+            string sql = "select id from user limit 1;";
             try
             {
                 using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))

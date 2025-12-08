@@ -14,7 +14,7 @@ namespace Infrastructure.Dal.Repositories
             {
                 connection.Open();
                 connection.Execute(@"Insert into User(Username, Name, Email, Password, Active)
-                  values (@username, @name, @email, @password, @active)", 
+                  values (@Username, @Name, @email, @Password, @Active)", 
                   new { entity.UserName, entity.Name,  entity.Email, entity.Password, entity.Active });
             }
         }
@@ -59,8 +59,8 @@ namespace Infrastructure.Dal.Repositories
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                connection.QueryFirstOrDefault(@"Update User set Username = @username, Name = @name, Email = @email,
-                    Password = @password, Active = @active where Id = @id",
+                connection.QueryFirstOrDefault(@"Update User set Username = @Username, Name = @Name, Email = @Email,
+                    Password = @password, Active = @Active where Id = @id",
                     new { entity.Id, entity.UserName, entity.Name, entity.Email, entity.Password, entity.Active });
             }
         }

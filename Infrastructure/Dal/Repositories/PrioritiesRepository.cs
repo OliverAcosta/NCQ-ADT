@@ -14,7 +14,7 @@ namespace Infrastructure.Dal.Repositories
             {
                 connection.Open();
                 connection.Execute(@"Insert into Priorities(Name, Description)
-                  values (@name, @description)", new { entity.Name, entity.Description });
+                  values (@Name, @Description)", new { entity.Name, entity.Description });
             }
         }
 

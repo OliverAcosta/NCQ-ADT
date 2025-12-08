@@ -12,5 +12,6 @@ namespace Infrastructure.Entities
         public int PriorityId { get; set; }
         public DateTime Created { get; set; }
         public DateTime DueDate { get; set; }
+        public bool Active { get; set; }
     }
 }

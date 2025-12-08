@@ -14,7 +14,7 @@ namespace Infrastructure.Dal.Repositories
             {
                 connection.Open();
                 connection.Execute(@"Insert into Status(Name, Description, Active)
-                  values (@name, @description, @Active)", new { entity.Name, entity.Description, entity.Active });
+                  values (@Name, @Description, @Active)", new { entity.Name, entity.Description, entity.Active });
             }
         }
 

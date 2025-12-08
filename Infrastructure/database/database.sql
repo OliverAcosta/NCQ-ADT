@@ -11,12 +11,12 @@ create TABLE Priorities(
   Id INTEGER PRIMARY KEY AUTOINCREMENT,
   Name varchar(200) not null,
   Description varchar(600) null,
-  Active not null
+  Active bit not null
 );
 
 create TABLE Status(
   Id INTEGER PRIMARY KEY AUTOINCREMENT,
-  Name int not null,
+  Name varchar(200) not null,
   Description varchar(600) null,
   Active bit not null
 );
@@ -38,8 +38,9 @@ CREATE TABLE UserTask(
   DueDate datetime not null,
   UserId INTEGER not null,
   StatusId INTEGER not null,
-  PriorityId INTEGER not null
-)
+  PriorityId INTEGER not null,
+  Active bit not null
+);
 
 
   
