@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.Dal.Repositories
 {
-    internal interface IRangeRespository
+    internal interface IRangeRepository
     {
     }
 }
