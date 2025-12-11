@@ -1,3 +1,5 @@
+using NCQ_ADT.views;
+
 namespace NCQ_ADT
 {
     internal static class Program
@@ -8,10 +10,14 @@ namespace NCQ_ADT
         [STAThread]
         static void Main()
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture =
+                new System.Globalization.CultureInfo("es-DO"); // Español
+            System.Threading.Thread.CurrentThread.CurrentUICulture =
+                new System.Globalization.CultureInfo("es-DO"); // Español
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new TaskEditor());
+            Application.Run(new ViewForm());
         }
     }
 }

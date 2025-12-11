@@ -6,17 +6,19 @@ using static Dapper.SqlMapper;
 
 namespace Infrastructure.Dal.Repositories
 {
-    public class UserTaskRepository : IRepository<UserTask>, IRangeRespository<UserTask>
+    public class UserTaskRepository : IRepository<UserTask>
     {
        
-        public void Add(UserTask entity)
+        public UserTask Add(UserTask entity)
         {
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                connection.Execute(@"Insert into UserTask(Name, Description, UserId, StatusId, PriorityId, Created, DueDate, Active)
-                  values (@Name, @Description, @UserId, @StatusId, @PriorityId, @Created, @DueDate, @Active);", 
+                 int result = connection.ExecuteScalar<int>(@"Insert into UserTask(Name, Description, UserId, StatusId, PriorityId, Created, DueDate, Active)
+                  values (@Name, @Description, @UserId, @StatusId, @PriorityId, @Created, @DueDate, @Active); SELECT last_insert_rowid();", 
                   new { entity.Name, entity.Description, entity.UserId, entity.StatusId, entity.PriorityId, entity.Created, entity.DueDate, entity.Active });
+                entity.Id = result;
+                return entity;
             }
         }
 
@@ -37,16 +39,6 @@ namespace Infrastructure.Dal.Repositories
                 return connection.QueryFirstOrDefault<UserTask>(@"Select Id, Name, Description, UserId, StatusId, PriorityId, Created, DueDate, Active from UserTask where Id = @id", new { id });
             }
         }
-
-        public IEnumerable<UserTask> GetRange(int[] range)
-        {
-            using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
-            {
-                connection.Open();
-                return connection.Query<UserTask>(@"Select Id, Name, Description, UserId, StatusId, PriorityId, Created, DueDate, Active from UserTask where Id in @range", range);
-            }
-        }
-
         public IEnumerable<UserTask> All()
         {
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
@@ -60,38 +52,52 @@ namespace Infrastructure.Dal.Repositories
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                connection.QueryFirstOrDefault(@"Update User set Name = @Name, Description = @Description, UserId = @Userid, StatusId = @StatusId,
-                                                PriorityId = @PriorityId, DueDate = @Duedate, Active = @Active where Id = @Id",
+                connection.QueryFirstOrDefault(@"Update UserTask set Name = @Name, Description = @Description, UserId = @UserId, StatusId = @StatusId,
+                                                PriorityId = @PriorityId, DueDate = @DueDate, Active = @Active where Id = @Id",
                     new { entity.Id, entity.Name, entity.Description, entity.UserId, entity.StatusId, entity.PriorityId, entity.DueDate, entity.Active});
             }
         }
 
-        public IEnumerable<UserTaskDto> getDTOs(int userId)
+        public IEnumerable<UserTaskDto> getDTOs(int userId = -1)
         {
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
+                bool hasUser = userId > 0;
+                string sql = @"SELECT 
+                                ut.Id, 
+                                ut.Name, 
+                                ut.Description, 
+                                ut.UserId, 
+                                ut.StatusId, 
+                                ut.PriorityId, 
+                                ut.Created, 
+                                ut.DueDate,
+                                ut.Active,
+                                u.Username, 
+                                u.Name AS User,
+                                p.Name AS Priority,
+                                s.Name AS Status
+                            FROM UserTask ut
+                            LEFT JOIN User u ON u.Id = ut.UserId
+                            LEFT JOIN Priorities p ON p.Id = ut.PriorityId
+                            LEFT JOIN Status s ON s.Id = ut.StatusId";
+                sql += hasUser ? " where ut.UserId = @userId;" : ";";
                 connection.Open();
-                return connection.Query<UserTaskDto>(@"SELECT 
-                                                        ut.Id, 
-                                                        ut.Name, 
-                                                        ut.Description, 
-                                                        ut.UserId, 
-                                                        ut.StatusId, 
-                                                        ut.PriorityId, 
-                                                        ut.Created, 
-                                                        ut.DueDate,
-                                                        ut.Active,
-                                                        u.Username, 
-                                                        u.Name AS User,
-                                                        p.Name AS Priority,
-                                                        s.Name AS Status
-                                                    FROM UserTask ut
-                                                    LEFT JOIN User u ON u.Id = ut.UserId
-                                                    LEFT JOIN Priorities p ON p.Id = ut.PriorityId
-                                                    LEFT JOIN Status s ON s.Id = ut.StatusId
-                                                    WHERE ut.UserId = @userId;
-                                                    ", new { userId});
+                if (hasUser) { return connection.Query<UserTaskDto>(sql, new { userId}); }
+
+                return connection.Query<UserTaskDto>(sql);
+
             }
+        }
+
+        public List<DateDto> getDates()
+        {
+            using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
+            {
+                var sql = "Select distinct Date(DueDate) as Date from UserTask order by DueDate";
+                return connection.Query<DateDto>(sql).ToList();
+            }
+
         }
     }
 }

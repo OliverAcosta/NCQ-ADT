@@ -1,6 +1,8 @@
 ﻿
 
 using Infrastructure.Dal;
+using Infrastructure.Entities;
+using System.Linq;
 
 namespace NCQ_ADT
 {
@@ -8,8 +10,10 @@ namespace NCQ_ADT
     {
         public TaskEditor()
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("es-DO");
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("es-DO");
             InitializeComponent();
-            initUI();
+            InitUI();
         }
 
         private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
@@ -17,7 +21,7 @@ namespace NCQ_ADT
 
         }
 
-        private void initUI()
+        private void InitUI()
         {
             var db = new DbContext();
             var combos = GetAllCombos(this);
@@ -26,13 +30,21 @@ namespace NCQ_ADT
                 item.DisplayMember = "Name";
                 item.ValueMember = "Id";
             }
-            //usuarios
-            this.cbUsers.DataSource = db.userRepository.All();
+            //usuarios  
+            var users = new List<User>(){ new User { Id = 0, Name = "Selecciona un usuario"} };
+            users.AddRange(db.userRepository.All().Where(m=> m.UserType > 2));
+            this.cbUsers.DataSource = users;
             //status
-            this.cbStatus.DataSource = db.statusRepository.All();
+            var status = new List<Status>() { new Status { Id = 0, Name = "Selecciona un estado" } };
+            status.AddRange(db.statusRepository.All());
+            this.cbStatus.DataSource = status;
             //prioridad
-            this.cbPriority.DataSource = db.prioritiesRepository.All();
+            var priorities = new List<Priorities>() { new Priorities { Id = 0, Name = "Selecciona una prioridad" } };
+            priorities.AddRange(db.prioritiesRepository.All());
+            this.cbPriority.DataSource = priorities;
             //fecha
+            this.datepicker.MinDate = DateTime.Now.AddDays(1);
+            this.datepicker.Format = DateTimePickerFormat.Short;
         }
 
         public IEnumerable<ComboBox> GetAllCombos(Control parent)

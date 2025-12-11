@@ -3,6 +3,7 @@
 create TABLE Notes(
   Id INTEGER PRIMARY KEY AUTOINCREMENT,
   UserTaskId INTEGER not null,
+  Created datetime not null,
   Note varchar(600) not null, 
   Active bit not null
 );
@@ -27,6 +28,7 @@ CREATE TABLE User(
   Name varchar(200) not null,
   Email varchar(200) null,
   Password varchar(800),
+  UserType INTEGER not null,
   Active bit not null
 );
 

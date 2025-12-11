@@ -6,21 +6,23 @@ using Utilities;
 
 namespace Infrastructure.Dal.Repositories
 {
-    public class GenericRepository<TEntity> : IRepository<TEntity>
+    public class GenericRepository<TEntity> : IRepository<TEntity> where TEntity : IIdentity, new()
     {
         string connectionString = "Data Source=tasks.db;Version=3;";
         public GenericRepository()
         {
 
         }
-        public void Add(TEntity entity)
+        public TEntity Add(TEntity entity) 
         {
             using (var connection = new SQLiteConnection(connectionString))
             {
                string sql = QueryUtility.GetInsertString<TEntity>();
                var dic = QueryUtility.GetValues(entity); 
                connection.Open();
-               connection.Execute(sql, dic);
+              int id = connection.ExecuteScalar<int>(sql, dic);
+                entity.Id = id;
+              return entity;
             }
         }
 

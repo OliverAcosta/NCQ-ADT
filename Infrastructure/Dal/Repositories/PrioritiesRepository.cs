@@ -5,16 +5,18 @@ using static Dapper.SqlMapper;
 
 namespace Infrastructure.Dal.Repositories
 {
-    public class PrioritiesRepository : IRepository<Priorities>, IRangeRespository<Priorities>
+    public class PrioritiesRepository : IRepository<Priorities>
     {
        
-        public void Add(Priorities entity)
+        public Priorities Add(Priorities entity)
         {
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                connection.Execute(@"Insert into Priorities(Name, Description, Active)
-                  values (@Name, @Description, Active)", new { entity.Name, entity.Description, entity.Active });
+               int id = connection.Execute(@"Insert into Priorities(Name, Description, Active)
+                  values (@Name, @Description, Active); SELECT last_insert_rowid();", new { entity.Name, entity.Description, entity.Active });
+               entity.Id = id;
+               return entity;
             }
         }
 
@@ -33,15 +35,6 @@ namespace Infrastructure.Dal.Repositories
             {
                 connection.Open();
                 return connection.QueryFirstOrDefault<Priorities>(@"Select Id, Name, Description, Active from Priorities where Id = @id", new { id });
-            }
-        }
-
-        public IEnumerable<Priorities> GetRange(int[] range)
-        {
-            using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
-            {
-                connection.Open();
-                return connection.Query<Priorities>(@"Select Id, Name, Description, Active from Priorities where Id in @range", range);
             }
         }
 

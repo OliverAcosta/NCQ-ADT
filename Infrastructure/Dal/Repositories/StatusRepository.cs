@@ -5,15 +5,17 @@ using static Dapper.SqlMapper;
 
 namespace Infrastructure.Dal.Repositories
 {
-    public class StatusRepository : IRepository<Status>, IRangeRespository<Status>
+    public class StatusRepository : IRepository<Status>
     {
-        public void Add(Status entity)
+        public Status Add(Status entity)
         {
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                connection.Execute(@"Insert into Status(Name, Description, Active)
-                  values (@Name, @Description, @Active)", new { entity.Name, entity.Description, entity.Active });
+                int id = connection.ExecuteScalar<int>(@"Insert into Status(Name, Description, Active)
+                  values (@Name, @Description, @Active); SELECT last_insert_rowid();", new { entity.Name, entity.Description, entity.Active });
+                entity.Id = id;
+                return entity;
             }
         }
 
@@ -35,14 +37,6 @@ namespace Infrastructure.Dal.Repositories
             }
         }
 
-        public IEnumerable<Status> GetRange(int[] range)
-        {
-            using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
-            {
-                connection.Open();
-                return connection.Query<Status>(@"Select Id, Name, Description, Active from Status where Id in @range", range);
-            }
-        }
 
         public IEnumerable<Status> All()
         {

@@ -11,9 +11,9 @@ Insert into Status (Name, Description, Active) values ('En Proceso','En Proceso'
 Insert into Status (Name, Description, Active) values ('Terminado','Terminado', 1);
 
 -- insert user
-Insert into User (Username, Name, Email, Password, Active) values ('admin','Juan Oliver','acosta.herrera.oliver@gmail.com','ut5uaO/cGr4OXiMDenDxBGpTWpfhj5+W+5TFkln1DF7li1TFtgJEuBdw8Hgt1Ybm', 1);
-Insert into User (Username, Name, Email, Password, Active) values ('oliver','Juan Oliver','acosta.herrera.oliver@gmail.com','ut5uaO/cGr4OXiMDenDxBGpTWpfhj5+W+5TFkln1DF7li1TFtgJEuBdw8Hgt1Ybm', 1);
-Insert into User (Username, Name, Email, Password, Active) values ('Invitado','Invitado','invitado@localhost.com','ut5uaO/cGr4OXiMDenDxBGpTWpfhj5+W+5TFkln1DF7li1TFtgJEuBdw8Hgt1Ybm', 1);
-Insert into User (Username, Name, Email, Password, Active) values ('Jose','Jose Mateo Aguilar Sanchez','jose.aguilar@gmail.com','ut5uaO/cGr4OXiMDenDxBGpTWpfhj5+W+5TFkln1DF7li1TFtgJEuBdw8Hgt1Ybm', 1);
+Insert into User (Username, Name, Email, Password, UserType, Active) values ('admin','admin','admin@gmail.com','ut5uaO/cGr4OXiMDenDxBGpTWpfhj5+W+5TFkln1DF7li1TFtgJEuBdw8Hgt1Ybm', 1, 1);
+Insert into User (Username, Name, Email, Password, UserType, Active) values ('oliver','Juan Oliver Acosta','acosta.herrera.oliver@gmail.com','ut5uaO/cGr4OXiMDenDxBGpTWpfhj5+W+5TFkln1DF7li1TFtgJEuBdw8Hgt1Ybm', 3, 1);
+Insert into User (Username, Name, Email, Password, UserType, Active) values ('Invitado','Rafael Hernandez(Invitado)','invitado@localhost.com','ut5uaO/cGr4OXiMDenDxBGpTWpfhj5+W+5TFkln1DF7li1TFtgJEuBdw8Hgt1Ybm', 4, 1);
+Insert into User (Username, Name, Email, Password, UserType, Active) values ('Jose','Jose Mateo Aguilar Sanchez','jose.aguilar@gmail.com','ut5uaO/cGr4OXiMDenDxBGpTWpfhj5+W+5TFkln1DF7li1TFtgJEuBdw8Hgt1Ybm',3, 1);
 
 --- password: #Tarea123

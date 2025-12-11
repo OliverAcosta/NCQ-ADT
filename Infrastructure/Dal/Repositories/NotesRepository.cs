@@ -8,22 +8,24 @@ namespace Infrastructure.Dal.Repositories
     public class NotesRepository : IRepository<Notes>, IRangeRespository<Notes>
     {
        
-        public void Add(Notes entity)
+        public Notes Add(Notes entity)
         {
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                connection.Execute(@"Insert into Notes(UserTaskId, Note, Active)
-                  values (@UserTaskId, @Note, @Active)", new { entity.UserTaskId, entity.Note, entity.Active });
+                int id = connection.ExecuteScalar<int>(@"Insert into Notes(UserTaskId, Note, Created, Active)
+                  values (@UserTaskId, @Note, @Created, @Active); SELECT last_insert_rowid();", new { entity.UserTaskId, entity.Note, entity.Created, entity.Active });
+                entity.Id = id;
+                return entity;
             }
         }
 
-        public bool Delete(int id)
+        public bool Delete(int userTaskId)
         {
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                return connection.Execute(@"Delete from Notes where Id = @id", new { id }) > 0;
+                return connection.Execute(@"Delete from Notes where Id = @userTaskId", new { userTaskId }) > 0;
             }
         }
 
@@ -32,16 +34,16 @@ namespace Infrastructure.Dal.Repositories
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                return connection.QueryFirstOrDefault<Notes>(@"Select Id, UserTaskId, Note, Active from Notes where Id = @id", new { id });
+                return connection.QueryFirstOrDefault<Notes>(@"Select Id, UserTaskId, Note, Created, Active from Notes where Id = @id", new { id });
             }
         }
 
-        public IEnumerable<Notes> GetRange(int[] range)
+        public IEnumerable<Notes> GetRange(int sometypeId)
         {
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                return connection.Query<Notes>(@"Select Id, UserTaskId, Note, Active from Notes where Id in @range", range);
+                return connection.Query<Notes>(@"Select Id, UserTaskId, Note, Created, Active from Notes where UserTaskId = @UserTaskId", new { UserTaskId = sometypeId});
             }
         }
 
@@ -50,7 +52,7 @@ namespace Infrastructure.Dal.Repositories
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                return connection.Query<Notes>(@"Select Id, UserTaskId, Note, Active from Notes");
+                return connection.Query<Notes>(@"Select Id, UserTaskId, Note, Created, Active from Notes");
             }
         }
 
@@ -59,8 +61,8 @@ namespace Infrastructure.Dal.Repositories
             using (var connection = new SQLiteConnection(DatabaseConnections.connectionString))
             {
                 connection.Open();
-                connection.QueryFirstOrDefault(@"Update set UserTaskId = @UserTaskId, Notes = @Notes where Id = @Id",
-                    new { entity.Id, entity.UserTaskId, entity.Note });
+                connection.QueryFirstOrDefault(@"Update set UserTaskId = @UserTaskId, Note = @Note, Created = @Created, Active = @Active where Id = @Id",
+                    new { entity.Id, entity.UserTaskId, entity.Note, entity.Created, entity.Active });
             }
         }
     }

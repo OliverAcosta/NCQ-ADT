@@ -8,6 +8,7 @@ namespace Infrastructure.Entities
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public int UserType { get; set; }
         public bool Active { get; set; }
 
         public override string ToString()

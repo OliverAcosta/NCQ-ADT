@@ -11,15 +11,23 @@ namespace ConsoleTest
         static void Main(string[] args)
         {
             var db = new DbContext();
-
-            foreach (var item in db.statusRepository.All())
+            foreach (var item in db.userTaskRepository.getDTOs())
             {
-                Console.WriteLine(item);
+               Console.WriteLine(item);
             }
-            foreach (var item in db.prioritiesRepository.All())
-            {
-                Console.WriteLine(item);
-            }
+            //foreach (var item in db.userTaskRepository.All())
+            //{
+            //    Console.WriteLine(item);
+            //}
+            //Console.WriteLine("I am here");
+            //foreach (var item in db.statusRepository.All())
+            //{
+            //    Console.WriteLine(item);
+            //}
+            //foreach (var item in db.prioritiesRepository.All())
+            //{
+            //    Console.WriteLine(item);
+            //}
             //db.userTaskRepository.Add(new UserTask
             //{
             //    Name = "2do Bug en produccion",

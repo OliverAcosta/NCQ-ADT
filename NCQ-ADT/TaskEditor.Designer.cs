@@ -41,7 +41,7 @@
             label5 = new Label();
             tableLayoutPanel6 = new TableLayoutPanel();
             cbPriority = new ComboBox();
-            dateTimePicker1 = new DateTimePicker();
+            datepicker = new DateTimePicker();
             tableLayoutPanel7 = new TableLayoutPanel();
             textBox1 = new TextBox();
             tableLayoutPanel8 = new TableLayoutPanel();
@@ -212,7 +212,7 @@
             tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel6.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel6.Controls.Add(cbPriority, 0, 0);
-            tableLayoutPanel6.Controls.Add(dateTimePicker1, 1, 0);
+            tableLayoutPanel6.Controls.Add(datepicker, 1, 0);
             tableLayoutPanel6.Dock = DockStyle.Fill;
             tableLayoutPanel6.Location = new Point(120, 266);
             tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -230,13 +230,13 @@
             cbPriority.Size = new Size(265, 29);
             cbPriority.TabIndex = 3;
             // 
-            // dateTimePicker1
+            // datepicker
             // 
-            dateTimePicker1.Dock = DockStyle.Fill;
-            dateTimePicker1.Location = new Point(274, 3);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(265, 29);
-            dateTimePicker1.TabIndex = 4;
+            datepicker.Dock = DockStyle.Fill;
+            datepicker.Location = new Point(274, 3);
+            datepicker.Name = "datepicker";
+            datepicker.Size = new Size(265, 29);
+            datepicker.TabIndex = 4;
             // 
             // tableLayoutPanel7
             // 
@@ -394,5 +394,6 @@
         private Button button3;
         private Button button4;
         private TextBox textBox1;
+        private DateTimePicker datepicker;
     }
 }
