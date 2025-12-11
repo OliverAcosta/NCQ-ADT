@@ -25,6 +25,9 @@ namespace NCQ_ADT.views
         }
         private void InitUI()
         {
+            this.Visible = false;
+            
+            //this.ForeColor = Color.White;
             Enable(false);
             var combos = GetControls<ComboBox>(this);
             foreach (var item in combos)
@@ -32,6 +35,8 @@ namespace NCQ_ADT.views
                 item.DisplayMember = "Name";
                 item.ValueMember = "Id";
             }
+
+
 
             this.userTaskCollection = db.userTaskRepository.getDTOs().ToList();
             //usuarios  
@@ -94,22 +99,23 @@ namespace NCQ_ADT.views
                         setErrors(true, "No existen cambio en esta tarea para ser guardada nuevamente!");
                         return;
                     }
-                    
+
                     enabledGridUpdate = false;
                     setErrors();
-                    
 
-                    if (userTaskId == 0) 
-                    { 
-                        entity = db.userTaskRepository.Add(entity); 
+
+                    if (userTaskId == 0)
+                    {
+                        entity = db.userTaskRepository.Add(entity);
                         userTask = entity;
                         added = true;
                     }
-                    else {
+                    else
+                    {
                         db.userTaskRepository.Update(entity);
                         added = false;
                     }
-                    
+
                     Enable(false);
 
                     UpdateDatagrid();
@@ -120,8 +126,9 @@ namespace NCQ_ADT.views
                     ShowData();
                     setErrors(false, added ? "Tarea agregada con exito!" : "Tarea actualizada!");
                 }
-                else 
+                else
                 { this.setErrors(true, "Debes llenar los controles correctamente, verifica cada uno de ellos!"); }
+                this.Visible = true;
             };
 
             this.btnNew.Click += (object sender, EventArgs e) =>
@@ -145,7 +152,7 @@ namespace NCQ_ADT.views
             this.btnDelete.Click += (object sender, EventArgs e) =>
             {
                 if (this.userTaskId == 0) { MessageBox.Show("Selecciona un elemento del datagrid", "Error", MessageBoxButtons.OK); }
-                 if (Convert.ToInt32(cbStatus.SelectedValue)  != 2)
+                if (Convert.ToInt32(cbStatus.SelectedValue) != 2)
                 {
                     db.notesRepository.Delete(this.userTaskId);
                     db.userTaskRepository.Delete(this.userTaskId);
@@ -155,9 +162,9 @@ namespace NCQ_ADT.views
                     Enable(false);
                     this.setErrors(false, string.Format("Se ha eliminado un registro con la Descripcion:{0}, Prioridad:{1}", this.txtDescription.Text, this.cbPriority.Text));
                     UpdateDatagrid();
-                    
-                } 
-                else if(Convert.ToInt32(cbStatus.SelectedValue) == 2)
+
+                }
+                else if (Convert.ToInt32(cbStatus.SelectedValue) == 2)
                 {
                     setErrors(true, "No se puede eliminar una tarea en Proceso");
                 }
@@ -175,14 +182,16 @@ namespace NCQ_ADT.views
                 }
             };
 
-            this.btnSearchClear.Click += (object sender, EventArgs e) => {
+            this.btnSearchClear.Click += (object sender, EventArgs e) =>
+            {
                 this.enabledGridUpdate = false;
                 this.clearSearch();
                 this.enabledGridUpdate = true;
                 this.UpdateDatagrid();
             };
 
-            this.txtSearchDescription.TextChanged += (object sender, EventArgs e) => {
+            this.txtSearchDescription.TextChanged += (object sender, EventArgs e) =>
+            {
                 if (!this.txtsearchDescPlaceholder.Has && txtSearchDescription.Text.Length >= 2)
                 {
                     Filter(sender, e);
@@ -192,6 +201,7 @@ namespace NCQ_ADT.views
                     UpdateDatagrid();
                 }
             };
+
             //form
             this.Load += Form1_Load;
         }
@@ -432,7 +442,7 @@ namespace NCQ_ADT.views
         public bool HasFormChanged()
         {
             return (txtDescription.Text.Length > 0 || ((User)cbUsers.SelectedItem).Id > 0 || ((Status)cbStatus.SelectedItem).Id > 0
-                || ((Priorities)cbPriority.SelectedItem).Id > 0);
+                || ((Priorities)cbPriority.SelectedItem).Id > 0) && txtDescription.Enabled;
         }
         public void setErrors(bool error = false, string msg = "")
         {
